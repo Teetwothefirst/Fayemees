@@ -43,7 +43,7 @@ export default function BarberPage() {
             </section>
 
             {/* Intro Section */}
-            <section className="py-20 bg-cream/30 px-6">
+            <section className="relative z-10 py-20 bg-cream px-6">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     <h2 className="font-display text-3xl md:text-4xl font-bold text-charcoal">The Art of Grooming</h2>
                     <p className="font-body text-mid leading-relaxed text-sm md:text-base">
@@ -64,7 +64,7 @@ export default function BarberPage() {
             </section>
 
             {/* Pricing Section */}
-            <section className="py-24 bg-white px-6">
+            <section className="relative z-10 py-24 bg-white px-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <span className="text-gold font-body text-xs uppercase tracking-[0.3em] font-bold">Menu & Pricing</span>

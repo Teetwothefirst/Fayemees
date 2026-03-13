@@ -3,18 +3,43 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { barberServices, salonServices } from "@/data/services";
-import { Calendar, Phone, MessageSquare, ChevronRight, Check } from "lucide-react";
+import { Calendar, MessageSquare, ChevronRight, Check } from "lucide-react";
+import { getCalApi } from "@calcom/embed-react";
 
 type BrandArm = "salon" | "barber";
+
+// Cal.com Event Links (Placeholders - Client to provide final slugs)
+const BOOKING_LINKS: Record<BrandArm, string> = {
+    salon: "fayeemees/salon-consultation",
+    barber: "fayeemees/barber-session"
+};
 
 export default function BookSelectionPage() {
     const [selectedArm, setSelectedArm] = useState<BrandArm>("salon");
     const [selectedService, setSelectedService] = useState<string>("");
-    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        setIsLoaded(true);
+        (async function () {
+            const cal = await getCalApi();
+            cal("ui", {
+                theme: "light",
+                styles: { branding: { brandColor: "#C9A84C" } },
+                hideEventTypeDetails: false,
+                layout: "month_view"
+            });
+        })();
     }, []);
+
+    const handleBookingTrigger = async () => {
+        const cal = await getCalApi();
+        cal("modal", {
+            calLink: BOOKING_LINKS[selectedArm],
+            config: {
+                notes: `Selected Service: ${selectedService}`,
+                theme: "light"
+            }
+        });
+    };
 
     const services = selectedArm === "salon" ? salonServices : barberServices;
 
@@ -47,8 +72,8 @@ export default function BookSelectionPage() {
                                     setSelectedService("");
                                 }}
                                 className={`relative py-6 px-4 border rounded-sm transition-all text-center group ${selectedArm === "salon"
-                                        ? "border-gold bg-gold/5"
-                                        : "border-stone/20 hover:border-gold/50"
+                                    ? "border-gold bg-gold/5"
+                                    : "border-stone/20 hover:border-gold/50"
                                     }`}
                             >
                                 <span className={`block font-display text-lg md:text-xl font-bold mb-1 ${selectedArm === "salon" ? "text-charcoal" : "text-mid"
@@ -67,8 +92,8 @@ export default function BookSelectionPage() {
                                     setSelectedService("");
                                 }}
                                 className={`relative py-6 px-4 border rounded-sm transition-all text-center group ${selectedArm === "barber"
-                                        ? "border-gold bg-gold/5"
-                                        : "border-stone/20 hover:border-gold/50"
+                                    ? "border-gold bg-gold/5"
+                                    : "border-stone/20 hover:border-gold/50"
                                     }`}
                             >
                                 <span className={`block font-display text-lg md:text-xl font-bold mb-1 ${selectedArm === "barber" ? "text-charcoal" : "text-mid"
@@ -113,16 +138,14 @@ export default function BookSelectionPage() {
                                     <Calendar className="text-gold w-12 h-12 mx-auto mb-4" />
                                     <h4 className="font-display text-2xl font-bold text-cream">Ready to Book?</h4>
                                     <p className="font-body text-stone/60 text-sm max-w-sm mx-auto italic">
-                                        Great choice. We&apos;ll now open our secure booking engine for <span className="text-gold font-bold">{selectedService}</span>.
+                                        Great choice. We&apos;ll now open our secure booking engine for <span className="text-gold font-bold">{selectedService}</span> at <span className="text-gold font-bold">{selectedArm === "salon" ? "Etana Beauty Salon" : "Eddy's Barber"}</span>.
                                     </p>
 
-                                    {/* Cal.com Integration Note:
-                      On a real implementation, we would now trigger the Cal.com embed.
-                      For now, we'll provide the booking UI placeholder that will trigger the embed.
-                  */}
-
                                     <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
-                                        <button className="bg-gold text-charcoal px-10 py-4 font-body text-xs uppercase tracking-widest font-bold hover:bg-gold/90 transition-all flex items-center justify-center space-x-2">
+                                        <button
+                                            onClick={handleBookingTrigger}
+                                            className="bg-gold text-charcoal px-10 py-4 font-body text-xs uppercase tracking-widest font-bold hover:bg-gold/90 transition-all flex items-center justify-center space-x-2"
+                                        >
                                             <span>Proceed to Schedule</span>
                                             <ChevronRight size={16} />
                                         </button>

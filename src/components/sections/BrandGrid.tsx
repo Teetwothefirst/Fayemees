@@ -77,39 +77,39 @@ export default function BrandGrid() {
                     {arms.map((arm, index) => (
                         <motion.div
                             key={arm.name}
-                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                            initial={{ opacity: 0, scale: 0.98, y: 40 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1, duration: 0.6 }}
-                            whileHover={{ y: -10 }}
-                            className="group relative overflow-hidden flex flex-col h-[400px] md:h-[500px]"
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
+                            whileHover={{ y: -8 }}
+                            className="group relative overflow-hidden flex flex-col h-[450px] md:h-[600px] cursor-pointer"
                         >
-                            {/* Image Background Placeholder */}
+                            {/* Image Background */}
                             <div
-                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0"
+                                className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.5s] ease-out group-hover:scale-110 z-0"
                                 style={{ backgroundImage: `url(${arm.image})` }}
                             >
-                                <div className="absolute inset-0 bg-charcoal/40 group-hover:bg-charcoal/20 transition-colors duration-500" />
+                                <div className="absolute inset-0 bg-charcoal/50 group-hover:bg-charcoal/30 transition-colors duration-700" />
                             </div>
 
                             {/* Content Overlay */}
-                            <div className="relative z-10 p-8 md:p-12 mt-auto h-full flex flex-col justify-end bg-gradient-to-t from-charcoal/90 via-charcoal/40 to-transparent">
-                                <div className="text-gold mb-4 group-hover:scale-110 transition-transform duration-500 origin-left">
+                            <div className="relative z-10 p-10 md:p-14 mt-auto h-full flex flex-col justify-end bg-gradient-to-t from-charcoal/95 via-charcoal/20 to-transparent">
+                                <div className="text-gold mb-6 transition-all duration-700 group-hover:scale-110 group-hover:-translate-y-2 origin-left">
                                     {arm.icon}
                                 </div>
-                                <h3 className="font-display text-3xl md:text-4xl font-bold text-cream mb-4 tracking-tight">
+                                <h3 className="font-display text-4xl md:text-5xl font-bold text-cream mb-6 tracking-tight italic">
                                     {arm.name}
                                 </h3>
-                                <p className="font-body text-stone/90 text-sm md:text-base max-w-xs mb-8 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                <p className="font-body text-stone/90 text-sm md:text-base max-w-sm mb-10 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 delay-100 italic leading-relaxed">
                                     {arm.description}
                                 </p>
                                 <Link
                                     href={arm.href}
-                                    className="inline-flex items-center space-x-2 text-gold font-body text-xs uppercase tracking-widest font-bold group/link"
+                                    className="inline-flex items-center space-x-3 text-gold font-body text-xs uppercase tracking-[0.2em] font-bold group/link"
                                 >
-                                    <span>Discover More</span>
-                                    <div className="w-8 h-px bg-gold transition-all duration-500 group-hover/link:w-12" />
-                                    <ArrowUpRight size={16} />
+                                    <span>Explore Collection</span>
+                                    <div className="w-12 h-px bg-gold transition-all duration-700 group-hover/link:w-20" />
+                                    <ArrowUpRight size={18} className="translate-y-0.5" />
                                 </Link>
                             </div>
                         </motion.div>

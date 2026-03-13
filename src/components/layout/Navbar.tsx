@@ -23,19 +23,10 @@ export default function Navbar() {
         setIsOpen(false);
     }, [pathname]);
 
-    // Prevent scrolling when menu is open
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "unset";
-        }
-    }, [isOpen]);
-
     const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <nav className="w-full py-5 px-6 border-b border-stone/20 bg-cream/90 backdrop-blur-md sticky top-0 z-50">
+        <nav className="w-full py-5 px-6 border-b border-stone/20 bg-cream/90 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 {/* Brand Logo */}
                 <Link
